@@ -1,3 +1,5 @@
+#coding=utf-8
+
 from django.conf.urls import url
 import views
 
@@ -10,6 +12,10 @@ urlpatterns = [
     url(r'^runtask/startspider$', views.startspiderbyid, name='startspiderbyid'),
     url(r'^runtask/selectspider$', views.selectspiderbyid, name='selectspiderbyid'),
     url(r'^runtask/getspiderlog$', views.getspiderlogbyid, name='getspiderlogbyid'),
+
+    # 根据爬虫id进入爬虫
+    url(r'^s/(\d+)$', views.intospider, name='intospider'),
+    url(r'^ss$', views.intospider_form, name='intospider_form'),
 
     url(r'^dataoprate$', views.dataoprate, name='dataoprate'),
     url(r'^spidersetting$', views.spidersetting, name='spidersetting'),

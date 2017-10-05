@@ -416,10 +416,15 @@ td{
 
 
 
+.initli{
+    list-style-type:none;
+}
 
 
-
-
+.runsetingh3{
+    text-align: center;
+    color: black;
+}
 
 
 

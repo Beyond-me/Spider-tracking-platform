@@ -1,3 +1,6 @@
+{#本页面实现了选择爬虫，输入运行任务后，执行爬虫－此时会新开一个爬虫进程#}
+{#随后会跳转到这个任务的运行界面#}
+
 {% extends 'basespiderweb.html' %}
 
 {% block spiderscript %}
@@ -9,12 +12,12 @@
 
             $('.spiderchoose').change(function () {
 
-                $.get("/spider/runtask/selectspider", {title: $(this).val()},
+                $.get("/spider/runtask/selectspider", {spider_id: $(this).val()},
                     function (data) {
                         con = data.data;
                         $('.spider_content').html(con.content);
                         $('.spider_mark').html(con.mark);
-                        $('.logul').html('');
+                        $('.logul').html(con.tags);
                     }
                 );
             });
@@ -22,41 +25,13 @@
 
             {#  这一段js需要好好整理和备注 #}
             $('#startspiderbutton').click(function () {
-
-                var spiderid = $(".spiderchoose").val();
-
-                alert(spiderid);
-
-                var spider_argv = $('#spiderargv').val();
-
-                $.get("/spider/runtask/startspider", {title: spiderid, argvs: spider_argv},
+                // 这一段　启动爬虫，传递爬虫任务的id，和启动任务的参数
+                $.get("/spider/runtask/startspider", {spider_id: $(".spiderchoose").val(), run_argvs: $('#spiderargv').val()},
                     function (data) {
-                        alert(data.data);
-                        $('.logul').append('<li>开始采集</li>')
+{#                        alert(data.data);#}
                     }
                 );
-
-                var flag = 'yes';
-                var myval = setInterval(function () {
-
-                    $.get("/spider/runtask/getspiderlog", {title: spiderid, argvs: spider_argv},
-                    function (data) {
-                     flag = data.data;
-                     if(flag != 'Null'){
-                         $('.logul').append('<li>'+data.data+'</li>');
-                     }
-                     if(flag === 'done'){
-                         clearInterval(myval);
-                     }
-                    });
-                }, 500);
-
-
-
-
             });
-
-
         })
 
     </script>
@@ -68,12 +43,12 @@
 {% block spiderbody %}
     <div class="row runseting">
 
-
+        <form action="/spider/ss" target="_blank" method="get">
         <div id="main_select">
         {#  爬虫选择下拉框 #}
             <div class="input-group spiderargv">
 
-                  <span class="input-group-addon" id="basic-addon3">输入运行参数</span>
+                  <span class="input-group-addon" id="basic-addon3">选择爬虫任务</span>
 
                   <select id="spiderchoose" class="spiderchoose" name="spiderchoose">
                   {% for each in all_spider%}
@@ -98,11 +73,12 @@
                 </div>
 
                 <div class="startspiderbutton">
-                    <button id="startspiderbutton" type="button" class="btn btn-success">启动爬虫</button>
-                    <button id="stopspiderbutton" type="button" class="btn btn-danger">停止爬虫</button>
+                    <button id="startspiderbutton" type="submit" class="btn btn-success">运行爬虫</button>
+{#                  <button id="stopspiderbutton" type="button" class="btn btn-danger">停止爬虫</button>#}
                 </div>
 
         </div>
+        </form>
 
 
     </div><!-- /row -->
@@ -112,7 +88,7 @@
         <div class="infoareasplitline"></div>
 
         <div class="infoarea pre-scrollable" id="style-3">
-            <div>Runing Log:</div>
+            <div class="ulmask">Run Log History:</div>
 
             <ul class="logul">
 

@@ -25,61 +25,61 @@
 
 
 {% block spiderbody %}
-		  	<div class="row">
+<div class="row">
 
 
-              <div class="col-lg-11 table_set">
-                      <div>
-						  <h3 class="checktabletitle">爬虫状态监控</h3>
-                          <section>
-                              <table class="table table-bordered table-striped table-condensed">
-                                  <thead class="cf">
-                                  <tr>
-                                      <th>爬虫ID</th>
-                                      <th>爬虫名称</th>
-                                      <th>数据储存方式</th>
-                                      <th>运行状态</th>
+  <div class="col-lg-11 table_set">
+          <div>
+              <h3 class="checktabletitle">爬虫状态监控</h3>
+              <section>
+                  <table class="table table-bordered table-striped table-condensed">
+                      <thead class="cf">
+                      <tr>
+                          <th>查看爬虫</th>
+                          <th>爬虫名称</th>
+                          <th>数据储存方式</th>
+                          <th>运行状态</th>
 
-                                      <th>请求次数</th>
-                                      <th>下载次数</th>
-                                      <th>数据量</th>
-                                      <th>报错率</th>
+                          <th>请求次数</th>
+                          <th>下载次数</th>
+                          <th>数据量</th>
+                          <th>报错率</th>
 
-                                      <th>启动参数</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-
-
-                                  {% for each in all_spider %}
-                                  <tr>
-                                      <td id="spiderid">{{ each.id }}</td>
-                                      <td id="spidername" class="spidertitle">{{ each.spider_name }}</td>
-                                      <td id="DB">{{ each.database_type.DBname }}</td>
-
-                                      {% if each.spider_runing == False %}
-                                      <td id="runing" style="color: red;">暂停运行</td>
-                                      {% else %}
-                                      <td id="runing" style="color: green;">运行中</td>
-                                      {% endif %}
-
-                                      <td id="request_count">{{ each.spider_request_count }}</td>
-                                      <td id="download_count">{{ each.spider_download_count }}</td>
-                                      <td id="info_count">{{ each.spider_download_count }}</td>
-                                      <td id="error_count" style="display: none;">{{ each.spider_error_count }}</td>
-                                      <td id="error_rate"></td>
-
-                                      <td id="runing_avgs">{{ each.spider_runavg }}</td>
-                                  </tr>
-                                  {% endfor %}
+                          <th>启动参数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
 
 
-                                  </tbody>
-                              </table>
-                          </section>
-                      </div><!-- /content-panel -->
-                  </div><!-- /col-lg-12 -->
-              </div><!-- /row -->
+                      {% for each in all_spider %}
+                      <tr>
+                          <td id="spiderid"><a href="/spider/s/{{ each.id }}" target="_blank">点击查看</a></td>
+                          <td id="spidername" class="spidertitle">{{ each.spider_name }}</td>
+                          <td id="DB">{{ each.database_type.DBname }}</td>
+
+                          {% if each.spider_runing == False %}
+                          <td id="runing" style="color: red;">暂停运行</td>
+                          {% else %}
+                          <td id="runing" style="color: green;">运行中</td>
+                          {% endif %}
+
+                          <td id="request_count">{{ each.spider_request_count }}</td>
+                          <td id="download_count">{{ each.spider_download_count }}</td>
+                          <td id="info_count">{{ each.spider_download_count }}</td>
+                          <td id="error_count" style="display: none;">{{ each.spider_error_count }}</td>
+                          <td id="error_rate"></td>
+
+                          <td id="runing_avgs">{{ each.spider_runavg }}</td>
+                      </tr>
+                      {% endfor %}
+
+
+                      </tbody>
+                  </table>
+              </section>
+          </div><!-- /content-panel -->
+      </div><!-- /col-lg-12 -->
+  </div><!-- /row -->
 
 
 {% endblock spiderbody %}
