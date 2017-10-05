@@ -1,0 +1,425 @@
+.navbar-header{
+	position: relative;
+}
+
+.dog{
+	position: relative;
+	left: 3px;
+	top: -6px;
+}
+
+
+/*改变巨幕高度*/
+.jumbotron {
+        padding-top: 50px;
+        background-color: #dce5ed;
+        padding-bottom: 20px;
+    }
+
+.navbar {
+	margin-bottom: 0;
+	background-color: #a9bec6;
+}
+
+/*改变定位颜色*/
+.navbar-default .navbar-nav>.active>a,.navbar-default .navbar-nav>.active>a:hover,.navbar-default .navbar-nav>.active>a:focus {
+    color: #555;
+    background-color: #dce5ed;
+}
+
+.moreblack:hover{
+	color: black;
+}
+
+.intro {
+	background-color: #dce5ed;
+	/*height: 280px;*/
+	padding: 0px 20px;
+}
+
+.secondtitle {
+	font-size: 16px;
+	/*font-weight: bold;*/
+	line-height: 48px;
+	color: black;
+	margin-top: 3px;
+}
+
+
+.rowdistance{
+	margin-bottom: 6px;
+}
+
+
+.chart{
+	width: 700px;
+}
+
+.thridtitle{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.proejctlimit{
+	border: 2px solid #b7b3be;
+	border-radius: 28px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding: 5px;
+	position: relative;
+	box-shadow: inset;
+}
+
+.taglocation{
+	padding-right: 10px;
+	font-weight: bold;
+    margin-left: 27px;
+}
+
+.rdate{
+    margin-left: 20px;
+}
+
+.tagmore{
+	margin-right: 10px;
+	color: #6199cd;
+	cursor: pointer;
+}
+
+.projgcolor{
+	background-color: #dce5ed;
+	padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.pdesc{
+	margin-top: 8px;
+	margin-left: 27px;
+    margin-bottom: 20px;
+}
+
+.octicon {
+    fill: currentColor;
+    vertical-align: top;
+    margin-left: 5px;
+    width: 28px;
+    height: 28px;
+    color: black;
+}
+
+.ptitle{
+	position: relative;
+	font-size: 24px;
+	margin-top: 15px;
+    margin-left: 27px;
+}
+
+.dtitle{
+	position: relative;
+	font-size: 24px;
+	margin-top: 15px;
+    text-align: center;
+}
+
+/*重写下拉菜单*/
+.navbar-default .navbar-nav>.open>a,.navbar-default .navbar-nav>.open>a:hover,.navbar-default .navbar-nav>.open>a:focus {
+    color: #555;
+    background-color: #dce5ed;
+}
+
+.wantmore{
+	position: relative;
+	overflow: hidden;
+}
+
+
+.foot{
+	margin-top: 50px;
+	text-align: center;
+	border-top: 1px solid black;
+	font-family: "Micorsoft YaHei";
+	width: 500px;
+}
+
+.fontcontent{
+	font-size: 16px;
+	padding: 1px;
+}
+
+.wechat{
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+/*给图片响应式加上上下间距*/
+.img-responsive{
+	margin: 5px 0px;
+}
+
+
+
+.indextitle{
+    font-size: 20px;
+    color: black;
+}
+
+
+.indexauth{
+    font-size: 14px;
+    margin-left: 8px;
+    color: black;
+}
+
+.titlepro{
+    margin-bottom: 5px;
+}
+
+.contenttitle{
+	color: black;
+}
+
+
+.contenttitle:hover{
+    color: indianred;
+}
+
+.typetitle{
+    font-size: 22px;
+}
+
+.newc{
+    background-color: #fff;
+}
+
+.indexlist{
+    padding: 10px 5px;
+}
+
+
+/*爬虫监控左侧边导航条*/
+.sidebarstyle{
+    height: 762px;
+    width: 200px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: #424a5d;
+}
+
+.sidebartitle{
+    color: #eeeeef;
+}
+
+.userinfo{
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.userinfotitle{
+    margin-top: 30px;
+    color: #f7ecb5;
+}
+
+
+.sidebarli:hover{
+    background-color: #68dff0;
+}
+
+.activesidebar{
+    background-color: #68dff0;
+}
+
+.sidebarli{
+    list-style-type:none;
+    padding: 15px 20px 15px 66px;
+}
+
+.sidecontent{
+    padding-top: 80px;
+    padding-left: 0px;
+}
+
+
+.sidebarhref:hover{
+    text-decoration: none;
+}
+
+
+/*爬虫监控主页内容*/
+.otherspidercontent{
+    margin-left: 200px;
+    margin-top: 70px;
+}
+
+.box1{
+    text-align: center;
+}
+
+.iconsize{
+    font-size: 50px;
+}
+
+
+.showbox{
+    text-align: center;
+    padding: 1px 30px;
+    margin-bottom: 35px;
+}
+
+
+.showboxmask:hover{
+    box-shadow: 2px 1px 1px black;
+}
+
+
+.numtotal{
+    margin-bottom: 80px;
+}
+
+.showboxmask{
+    background:cyan url(/static/images/bg1.png) no-repeat center;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.showboxleftfoot{
+    padding-right: 20px;
+}
+
+.showboxrightfoot{
+    padding-left: 25px;
+}
+
+.fontwhite{
+    color: white;
+}
+
+.showtitle{
+    padding-top: 10px;
+}
+
+.box1:hover{
+	box-shadow: -2px 2px 3px #333;
+	transform: rotateX(3deg) rotateY(3deg) rotateZ(-3deg);
+	transform-origin:50% 50%;
+	transition: all 0.5s;
+    background-color: #edeadb;
+}
+
+
+
+/*爬虫监控查看全部任务*/
+
+.table_set{
+    margin-left: 20px;
+}
+
+td{
+    width: auto;
+    height: 30px;
+}
+
+.checktabletitle{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+/*表格的行高度变高*/
+.table-condensed>thead>tr>th,.table-condensed>tbody>tr>th,.table-condensed>tfoot>tr>th,.table-condensed>thead>tr>td,.table-condensed>tbody>tr>td,.table-condensed>tfoot>tr>td {
+    padding: 10px;
+}
+
+
+
+
+/*运行爬虫*/
+.runseting{
+    padding-left: 50px;
+}
+
+
+.spiderchoose{
+    width: 200px;
+    height: 30px;
+    z-index: 2;
+}
+
+.spiderargv{
+    margin-top: 20px;
+    width: 600px;
+}
+
+
+.startspiderbutton{
+    margin-top: 20px;
+}
+
+
+.startspiderbutton button{
+    margin-right: 50px;
+}
+
+
+
+.spidermark{
+    margin-top: 20px;
+    width: 600px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.spider_content{
+    padding-left: 24px;
+    margin-bottom: 10px;
+}
+
+.spider_mark{
+    padding-left: 24px;
+}
+
+.markstyle{
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    width: 90px;
+}
+
+.selecttitle{
+    width: 100px;
+}
+
+
+.infoarea{
+    width: 1000px;
+    height: 500px;
+    margin-left: 50px;
+    margin-top: 25px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    /*overflow-y: scroll;*/
+}
+
+
+.infoareasplitline{
+    border-top: 1px solid #ccc;
+    margin-left: 50px;
+    margin-top: 25px;
+    width: 1250px;
+}
+
+
+.logul li{
+    list-style-type:none;
+}
+
+
+
+
+
+
+
+
+
+

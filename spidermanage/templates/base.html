@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>李谦的博客</title>
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/js/custom.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+	<link href="/static/images/myico2.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="/static/lineicons/style.css">
+
+    {% block script %}
+
+    {% endblock script %}
+
+</head>
+<body>
+
+	<!-- 导航条 -->
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand dog"><img src="/static/images/dog.png" alt="微信外链" width="28px"></a>
+			</div>
+			<ul class="nav navbar-nav">
+
+				<li id='mainbt'><a href="/">主页</a></li>
+
+				<li  id='artbt' class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人文章<span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="/articel">所有文章</a></li>
+                    <li role="separator" class="divider"></li>
+
+		            <li><a href="/articel/type/爬虫">爬虫</a></li>
+		            <li><a href="/articel/type/python知识">python知识</a></li>
+		            <li><a href="/articel/type/验证码">验证码</a></li>
+		            <li><a href="/articel/type/机器学习">机器学习</a></li>
+
+		            <li role="separator" class="divider"></li>
+		            <li><a href="#">早岁那知世事艰</a></li>
+		          </ul>
+		        </li>
+
+
+				<li  id='probt' class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人项目<span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="/project">所有项目</a></li>
+
+                    <li role="separator" class="divider"></li>
+                     <li><a href="/project/ptype/web后端">web后端</a></li>
+                     <li><a href="/project/ptype/数据采集">数据采集</a></li>
+                    <li role="separator" class="divider"></li>
+
+		            <li><a href="/project/p/nickliqian/dailybuy">项目: 使用Django开发电商平台</a></li>
+		            <li><a href="/project/p/nickliqian/jiayuan_public">项目: 分布式采集世纪佳缘公开用户信息</a></li>
+		            <li><a href="/project/p/nickliqian/lagou_job">项目: 多线程采集拉勾网职位信息</a></li>
+		            <li><a href="/project">更多</a></li>
+
+                    <li role="separator" class="divider"></li>
+		            <li><a href="#">中原北望气如山</a></li>
+		          </ul>
+		        </li>
+				<li id='funcbt' ><a href="#" class="moreblack">功能测试</a></li>
+				<li id='spiderbt' ><a href="/spider/spiderstatus" class="moreblack">爬虫展示</a></li>
+				<li id='likebt' ><a href="#" class="moreblack">兴趣爱好</a></li>
+				<li id='ghbt' ><a href="#" class="moreblack">GitHub</a></li>
+			</ul>
+		</div>
+	</div>
+
+{% block jumbotron %}
+
+
+	<!-- 巨幕 -->
+	<div class="jumbotron">
+	  <div class="container">
+	    <h1>欢迎访问</h1>
+	    <p class="glyphicon glyphicon-user"> 流水不腐，户枢不蠹。</p>
+	  </div>
+	</div>
+{% endblock jumbotron %}
+
+{% block body %}
+
+{% endblock body %}
+
+
+	<div class="container foot">
+
+
+	<div class="fontcontent">此个人主页仅供学习交流使用</div>
+	<div class="fontcontent">E-mail: nickliqian@outlook.com<img src="/static/images/Wechat.png" class="wechat" alt="微信" width="20px"></div>
+	<div class="fontcontent">Made by 李谦</div>
+
+	</div>
+
+</body>
+</html>

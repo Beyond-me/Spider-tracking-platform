@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+    {% block script %}
+        <script>
+            $(function () {
+                $('#artbt').addClass('active')
+            })
+
+
+
+        </script>
+    {% endblock script %}
+
+{% block body %}
+
+
+    <div class="container secondtitle">> <a href="/articel">文章列表</a>
+    <span>> <a href="/articel/type/{{ arti.articel_type.typename }}">{{ arti.articel_type.typename }}</a></span>
+    <span>> <a href="/articel/a/{{ arti.id }}">{{ arti.title }}</a></span></div>
+
+
+	<div class="container projgcolor newc">
+    <div class="proejctlimit">
+	<div class="dtitle">{{ arti.title }}</div>
+
+        <span class="taglocation">作者:</span>
+        <span>{{ arti.author }}</span>
+
+        <span class="taglocation rdate">发布日期:</span>
+	    <span>{{ arti.release_date }}</span>
+
+	<div class="pdesc">{{ arti.content|safe }}</div>
+
+    </div>
+    </div>
+
+
+{% endblock body %}

@@ -1,0 +1,128 @@
+{% extends 'basespiderweb.html' %}
+
+{% block spiderscript %}
+    <link rel="stylesheet" href="/static/css/scrol.css">
+
+
+    <script type="application/javascript">
+        $(function(){
+
+            $('.spiderchoose').change(function () {
+
+                $.get("/spider/runtask/selectspider", {title: $(this).val()},
+                    function (data) {
+                        con = data.data;
+                        $('.spider_content').html(con.content);
+                        $('.spider_mark').html(con.mark);
+                        $('.logul').html('');
+                    }
+                );
+            });
+
+
+            {#  这一段js需要好好整理和备注 #}
+            $('#startspiderbutton').click(function () {
+
+                var spiderid = $(".spiderchoose").val();
+
+                alert(spiderid);
+
+                var spider_argv = $('#spiderargv').val();
+
+                $.get("/spider/runtask/startspider", {title: spiderid, argvs: spider_argv},
+                    function (data) {
+                        alert(data.data);
+                        $('.logul').append('<li>开始采集</li>')
+                    }
+                );
+
+                var flag = 'yes';
+                var myval = setInterval(function () {
+
+                    $.get("/spider/runtask/getspiderlog", {title: spiderid, argvs: spider_argv},
+                    function (data) {
+                     flag = data.data;
+                     if(flag != 'Null'){
+                         $('.logul').append('<li>'+data.data+'</li>');
+                     }
+                     if(flag === 'done'){
+                         clearInterval(myval);
+                     }
+                    });
+                }, 500);
+
+
+
+
+            });
+
+
+        })
+
+    </script>
+
+
+{% endblock spiderscript %}
+
+
+{% block spiderbody %}
+    <div class="row runseting">
+
+
+        <div id="main_select">
+        {#  爬虫选择下拉框 #}
+            <div class="input-group spiderargv">
+
+                  <span class="input-group-addon" id="basic-addon3">输入运行参数</span>
+
+                  <select id="spiderchoose" class="spiderchoose" name="spiderchoose">
+                  {% for each in all_spider%}
+                  <option value="{{ each.id }}">{{ each.spider_name }}</option>
+                  {% endfor %}
+                  </select>
+
+            </div>
+
+                <div class="input-group spiderargv">
+                  <span class="input-group-addon" id="basic-addon3">输入运行参数</span>
+                  <input name="spiderargv" type="text" class="form-control" id="spiderargv" aria-describedby="basic-addon3" placeholder="例如淘宝: python [零食] [深圳]">
+                </div>
+
+                <div class="spidermark">
+
+                    <div class="markstyle">爬虫采集目标</div>
+                    <div class="spider_content">{{ content }}</div>
+                    <div class="markstyle">爬虫启动说明</div>
+                    <div class="spider_mark">{{ mark }}</div>
+
+                </div>
+
+                <div class="startspiderbutton">
+                    <button id="startspiderbutton" type="button" class="btn btn-success">启动爬虫</button>
+                    <button id="stopspiderbutton" type="button" class="btn btn-danger">停止爬虫</button>
+                </div>
+
+        </div>
+
+
+    </div><!-- /row -->
+
+    <div class="row">
+
+        <div class="infoareasplitline"></div>
+
+        <div class="infoarea pre-scrollable" id="style-3">
+            <div>Runing Log:</div>
+
+            <ul class="logul">
+
+            </ul>
+
+
+        </div>
+
+    </div>
+
+
+{% endblock spiderbody %}
+

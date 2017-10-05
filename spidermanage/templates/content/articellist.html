@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+    {% block script %}
+        <script>
+            $(function () {
+                $('#artbt').addClass('active')
+            })
+
+
+
+        </script>
+    {% endblock script %}
+
+{% block body %}
+
+
+    <div class="container secondtitle">> <a href="/articel">文章列表</a></div>
+
+    {% for each in all_articel %}
+
+	<div class="container projgcolor">
+    <div class="proejctlimit">
+	<div class="ptitle"><a href="/a/{{ each.id}}" class="contenttitle">{{ each.title }}</a></div>
+
+        <span class="taglocation">作者:</span>
+        <span>{{ each.author }}</span>
+
+        <span class="taglocation rdate">发布日期:</span>
+	    <span>{{ each.release_date }}</span>
+
+	<div class="pdesc">{{ each.shortnote }}</div>
+
+    </div>
+    </div>
+
+    {% endfor %}
+
+{% endblock body %}

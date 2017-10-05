@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block script %}
+
+    <script>
+        $(function () {
+            $('#spiderbt').addClass('active');
+            $('#{{ urlmark }}').addClass('activesidebar');
+
+        });
+
+    </script>
+
+
+    {# js空位#}
+    {% block spiderscript %}
+    {% endblock spiderscript %}
+
+
+
+{% endblock script %}
+
+{#取消巨幕#}
+{% block jumbotron %}
+{% endblock jumbotron %}
+
+
+{% block body %}
+
+
+
+<div class="sidebarstyle">
+
+    <ul class="sidecontent">
+
+        <div class="userinfo">
+            <a href="#"><img src="/static/images/fr-11.jpg" class="img-circle" width="60"></a>
+            <h5 class="userinfotitle">访客</h5>
+        </div>
+
+        <a class="sidebarhref" href="/spider/spiderstatus">
+        <li class="sidebarli" id='spiderstatus' >
+                <span class="sidebartitle">概览</span>
+        </li>
+        </a>
+
+        <a class="sidebarhref" href="/spider/checktask">
+        <li class="sidebarli" id='checktask'>
+                <span class="sidebartitle">查看任务</span>
+        </li>
+        </a>
+
+
+        <a class="sidebarhref" href="/spider/runtask">
+        <li class="sidebarli" id='runtask'>
+                <span class="sidebartitle">执行任务</span>
+        </li>
+        </a>
+
+        <a class="sidebarhref" href="/spider/dataoprate">
+        <li class="sidebarli" id='dataoprate'>
+                <span class="sidebartitle">数据操作</span>
+        </li>
+        </a>
+
+        <a class="sidebarhref" href="/spider/spidersetting">
+         <li class="sidebarli" id='spidersetting'>
+                <span class="sidebartitle">自定义设置</span>
+        </li>
+        </a>
+
+        <a class="sidebarhref" href="/spider/spiderhistoty">
+         <li class="sidebarli" id='spiderhistoty'>
+                <span class="sidebartitle">历史记录</span>
+        </li>
+        </a>
+
+
+    </ul>
+</div>
+
+
+<div class="container-fluid otherspidercontent">
+<div class="row">
+
+{% block spiderbody %}
+
+
+
+{% endblock spiderbody %}
+
+</div>
+</div>
+
+{% endblock body %}

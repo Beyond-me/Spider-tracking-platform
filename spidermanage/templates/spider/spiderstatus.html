@@ -1,0 +1,125 @@
+{% extends 'basespiderweb.html' %}
+
+
+    {% block spiderscript %}
+
+
+
+    {% endblock spiderscript %}
+
+
+
+{% block spiderbody %}
+<!-- 整体状态栏 -->
+<div class="col-lg-9">
+
+<!-- 数值统计栏 -->
+<div class="row numtotal">
+
+        <div class="col-md-2 col-sm-2 col-md-offset-1">
+        <div class="box1">
+        <span class="li_world iconsize"></span>
+        <h3>{{ requests_total }}</h3>
+        <p>共发出请求量</p>
+        </div>
+        </div>
+
+        <div class="col-md-2 col-sm-2">
+        <div class="box1">
+        <span class="li_cloud iconsize"></span>
+        <h3>{{ download_total }}</h3>
+        <p>总下载页面量</p>
+        </div>
+        </div>
+
+        <div class="col-md-2 col-sm-2">
+        <div class="box1">
+        <span class="li_note iconsize"></span>
+        <h3>{{ info_total }}</h3>
+        <p>总储存数据量</p>
+        </div>
+        </div>
+
+        <div class="col-md-2 col-sm-2">
+        <div class="box1">
+        <span class="li_params iconsize"></span>
+        <h3>{{ spider_num }}</h3>
+        <p>可用爬虫个数</p>
+        </div>
+        </div>
+
+        <div class="col-md-2 col-sm-2">
+        <div class="box1">
+        <span class="li_vynil iconsize"></span>
+        <h3>{{ run_time }} day</h3>
+        <p>累计运行时间</p>
+        </div>
+        </div>
+
+</div><!-- /row mt -->
+<!-- 数值统计栏结束 -->
+
+<!-- 爬虫状态栏 -->
+<div class="row">
+
+    {% for each in all_spider %}
+<!-- TWITTER PANEL -->
+<div class="col-lg-4 showbox">
+        <div class="showboxmask">
+            <div>
+                <h5 class="showtitle fontwhite">{{ each.spider_name }}</h5>
+            </div>
+            <div>
+                <img class="spiderlogo" src="/static/media/{{ each.spider_pic }}" alt="网站logo" height="120" width="120">
+            </div>
+
+            <p style="color: #a7a7a7">{{ each.spider_content }}</p>
+
+            <span class="showboxleftfoot fontwhite">数据量: {{ each.spider_info_count }}</span>
+            <span class="showboxrightfoot fontwhite">储存方式: {{ each.database_type.DBname }}</span>
+
+      </div>
+</div>
+<!--TWITTER PANEL结束-->
+    {% endfor %}
+
+</div>
+<!-- 爬虫状态栏结束 -->
+
+</div>
+<!-- 整体状态栏 -->
+
+
+<!-- 通知栏 -->
+<div class="col-lg-3">
+<!--COMPLETED ACTIONS DONUTS CHART-->
+<h3>通知栏</h3>
+    <!-- First Action -->
+    <div class="desc">
+        <div class="thumb">
+            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+            <p><muted>18点59分</muted><br/>
+                 <a href="#">spider-1</a>请求url:xxx成功！<br/>
+            </p>
+        </div>
+    </div>
+
+    <!-- Second Action -->
+    <div class="desc">
+        <div class="thumb">
+            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+            <p><muted>18点56分</muted><br/>
+                 <a href="#">spider-1</a>下载页面:xxx成功！<br/>
+            </p>
+        </div>
+    </div>
+
+</div><!-- /col-lg-3 -->
+<!-- 通知栏结束 -->
+{% endblock spiderbody %}
+
+
