@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+    {% block title %}
+        <title>{{ arti.title }}</title>
+    {% endblock title %}
+
     {% block script %}
         <script>
             $(function () {
@@ -21,13 +26,17 @@
 	<div class="container projgcolor newc">
     <div class="proejctlimit">
 	<div class="dtitle">{{ arti.title }}</div>
-
+    <div class="textalign">
         <span class="taglocation">作者:</span>
         <span>{{ arti.author }}</span>
 
         <span class="taglocation rdate">发布日期:</span>
 	    <span>{{ arti.release_date }}</span>
-
+        <span class="taglocation rdate">Tag:</span>
+        {% for each in alltag  %}
+            <a href="" class="tagatag">{{ each.tagname }}</a>
+        {% endfor %}
+    </div>
 	<div class="pdesc">{{ arti.content|safe }}</div>
 
     </div>

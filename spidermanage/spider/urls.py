@@ -10,6 +10,8 @@ urlpatterns = [
 
     url(r'^runtask$', views.runtask, name='runtask'),
     url(r'^runtask/startspider$', views.startspiderbyid, name='startspiderbyid'),
+    url(r'^runtask/stopspider$', views.stopspiderbyid, name='stopspiderbyid'),
+
     url(r'^runtask/selectspider$', views.selectspiderbyid, name='selectspiderbyid'),
     url(r'^runtask/getspiderlog$', views.getspiderlogbyid, name='getspiderlogbyid'),
 

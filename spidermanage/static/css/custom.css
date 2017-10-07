@@ -99,6 +99,7 @@
     margin-bottom: 20px;
 }
 
+
 .octicon {
     fill: currentColor;
     vertical-align: top;
@@ -119,6 +120,20 @@
 	position: relative;
 	font-size: 24px;
 	margin-top: 15px;
+    text-align: center;
+}
+
+.textalign{
+    text-align: center;
+    position: relative;
+    margin-top: 8px;
+}
+
+.tagatag{
+    padding-right: 8px;
+}
+
+.pageclass{
     text-align: center;
 }
 
@@ -425,6 +440,33 @@ td{
     text-align: center;
     color: black;
 }
+
+
+.fontcolorgreen{
+    color: green;
+}
+
+.fontcolorred{
+    color: red;
+}
+
+.selecetrunstatus{
+    margin-left: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

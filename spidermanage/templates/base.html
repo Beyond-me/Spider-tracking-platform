@@ -3,7 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>李谦的博客</title>
+
+    {% block title %}
+        <title>李谦的博客</title>
+    {% endblock title %}
+
 	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/static/js/custom.js"></script>
@@ -40,8 +44,6 @@
 		            <li><a href="/articel/type/验证码">验证码</a></li>
 		            <li><a href="/articel/type/机器学习">机器学习</a></li>
 
-		            <li role="separator" class="divider"></li>
-		            <li><a href="#">早岁那知世事艰</a></li>
 		          </ul>
 		        </li>
 
@@ -59,16 +61,13 @@
 		            <li><a href="/project/p/nickliqian/dailybuy">项目: 使用Django开发电商平台</a></li>
 		            <li><a href="/project/p/nickliqian/jiayuan_public">项目: 分布式采集世纪佳缘公开用户信息</a></li>
 		            <li><a href="/project/p/nickliqian/lagou_job">项目: 多线程采集拉勾网职位信息</a></li>
-		            <li><a href="/project">更多</a></li>
 
-                    <li role="separator" class="divider"></li>
-		            <li><a href="#">中原北望气如山</a></li>
 		          </ul>
 		        </li>
 				<li id='funcbt' ><a href="#" class="moreblack">功能测试</a></li>
 				<li id='spiderbt' ><a href="/spider/spiderstatus" class="moreblack">爬虫展示</a></li>
-				<li id='likebt' ><a href="#" class="moreblack">兴趣爱好</a></li>
-				<li id='ghbt' ><a href="#" class="moreblack">GitHub</a></li>
+{#				<li id='likebt' ><a href="#" class="moreblack">兴趣爱好</a></li>#}
+				<li id='ghbt' ><a href="https://github.com/nickliqian" target="_blank" class="moreblack">GitHub</a></li>
 			</ul>
 		</div>
 	</div>

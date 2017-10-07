@@ -1,0 +1,192 @@
+/*
+** style.css 
+** created: 27.08.2009
+** luke anderson
+*/
+
+body {
+    background-image: url(/static/images/bg.png);
+    background-repeat: repeat-x;
+    background-color: #dbdddd;
+    margin: 0px;
+	padding:0px;
+	font-family: "Myriad Pro", "Tahoma", "Verdana", "Arial";
+}
+
+/*
+********************************************
+** Styles for the header and logo section.
+********************************************
+*/
+#header {
+	width: 855px;
+	margin: 16px auto auto auto;
+}
+
+#header li { 
+	list-style: none;
+	color: #b9b9b9;
+	padding-left: 60px;
+	font-size: 14pt;
+}
+
+#header ul {
+	padding-top: 8px;
+	margin:0px;
+}
+
+#logo {
+    height: 81px;
+	margin-left: 75px;
+	margin-right: 30px;
+	padding-right: 20px;
+	float: left;
+	border-right: solid 1px #b9b9b9;
+}
+/* End header & logo styles */
+
+
+
+/*
+***************************************
+** Styles for the main content and
+** progress bar section.
+***************************************
+*/
+#main {
+    background-image: url(/static/images/main-trans.png);
+    width: 855px;
+    height: 412px;
+    margin: auto;
+    margin-top: 40px;
+}
+
+#message {
+	width: 740px;
+	margin: auto;
+	font-size: 22pt;
+}
+
+#message p {
+	margin:29px 0px 29px 75px;
+}
+
+#sorry {
+	margin-left: 60px;
+	margin-top: 30px;
+}
+
+#progress {
+	font-size: 16pt;
+	color: #686868;
+	width: 700px;
+	text-align: center;
+	margin: auto;
+	padding-left: 40px;
+}
+
+#progress p {
+	padding-top: 150px;
+}
+
+.progress10, .progress20, .progress30, .progress40, .progress50,
+.progress60, .progress70, .progress80, .progress90, .progress100 {
+	background-repeat: no-repeat;
+	width: 659px;
+	height: 83px;
+}
+
+.progress10 { background-image: url(/static/images/10-trans.png); }
+.progress20 { background-image: url(/static/images/20-trans.png); }
+.progress30 { background-image: url(/static/images/30-trans.png); }
+.progress40 { background-image: url(/static/images/40-trans.png); }
+.progress50 { background-image: url(/static/images/50-trans.png); }
+.progress60 { background-image: url(/static/images/60-trans.png); }
+.progress70 { background-image: url(/static/images/70-trans.png); }
+.progress80 { background-image: url(/static/images/80-trans.png); }
+.progress90 { background-image: url(/static/images/90-trans.png); }
+.progress100 { background-image: url(/static/images/100-trans.png); }
+
+#main #progress {
+	margin-left: 110px;
+	margin-top: -25px;
+}
+
+#completion {
+	font-size: 16pt;
+	color: #686868;
+	text-align: center;
+	margin: auto;
+	width: 700px;
+	padding-left: 30px;
+	margin-top: 6px;
+}
+/* End main & progress styles */
+
+
+
+/*
+***************************************
+** Styles for the Twitter section.
+***************************************
+*/
+
+#tweet_wrap {
+    background-image: url(/static/images/twitterBox-trans.png);
+	background-repeat: no-repeat;
+    width: 855px;
+    height: 92px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 16pt;
+    color: #686868;
+	padding-top:5px;
+	position:relative;
+	/* display: none; */
+	/* IF you want to remove the twitter section, un-comment the above line so it just reads... "display: none;" (without the quotes of course) */
+}
+
+#tweet a {
+	color: #000000;
+}
+
+#tweet a:hover {
+	color: #000000;
+}
+
+#tweet .loading {
+	margin-left:370px;
+	margin-top:28px;
+}
+
+#tweet ul {
+	list-style:none;
+	float:left;	
+	margin:10px 0px 0px 0px;
+}
+
+#tweet li {
+	font-size: 18px;
+	left: 145px;
+	position: absolute;
+	top: 18px;
+	width: 630px;
+}
+
+#twitterLogo {
+	background-repeat: no-repeat;
+	position:absolute;
+	top:26px;
+	left:88px
+}
+
+#twitter img {
+	margin-left: -200px;
+}
+/* End twitter styles */
+
+
+.backhand{
+	text-decoration: none;
+}

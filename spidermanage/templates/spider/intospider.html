@@ -5,19 +5,24 @@
 
 {% extends 'basespiderweb.html' %}
 
+
+    {% block title %}
+        <title>爬虫实时监控页面</title>
+    {% endblock title %}
+
 {% block spiderscript %}
     <link rel="stylesheet" href="/static/css/scrol.css">
 
     <script>
 
-        var primary = '{{ primary }}';
-
-        if(primary === 'no'){
-            alert('没有足够的权限操作这个任务！')
-        }
-        if(primary === 'yes'){
-            alert('启动爬虫成功！')
-        }
+{#        var primary = '{{ primary }}';#}
+{##}
+{#        if(primary === 'no'){#}
+{#            alert('没有足够的权限操作这个任务！')#}
+{#        }#}
+{#        if(primary === 'yes'){#}
+{#            alert('启动爬虫成功！')#}
+{#        }#}
 
         var flag = 'yes';
         var myval = setInterval(function () {
@@ -30,7 +35,7 @@
                  if(flag === 'done'){
                      clearInterval(myval);
                      $('.logul').html('<li>'+data.content+'</li>');
-                     $('#runstatus').html('暂停运行')
+                     $('#runstatus').html('暂停运行').css("color","red");
                  }
             });
         }, 500);
@@ -59,9 +64,9 @@
 
                 <div class="markstyle">运行状态</div>
                   {% if spider_obj.spider_runing == False %}
-                      <div class="spider_mark" id="runstatus" style="color: red;">暂停运行</div>
+                      <div class="spider_mark fontcolorred" id="runstatus" style="color: red;">暂停运行</div>
                   {% else %}
-                      <div class="spider_mark" id="runstatus" style="color: green;">运行中</div>
+                      <div class="spider_mark fontcolorgreen" id="runstatus" style="color: green;">运行中</div>
                   {% endif %}
 
             </div>
@@ -75,7 +80,7 @@
         <div class=""></div>
 
         <div class="infoarea pre-scrollable" id="style-3">
-            <div class="ulmask">Run Log History:</div>
+            <div class="ulmask">历史信息:</div>
 
             <ul class="logul">
 

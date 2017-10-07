@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+    {% block title %}
+        <title>文章列表</title>
+    {% endblock title %}
+
     {% block script %}
         <script>
             $(function () {
@@ -15,7 +20,7 @@
 
     <div class="container secondtitle">> <a href="/articel">文章列表</a></div>
 
-    {% for each in all_articel %}
+    {% for each in page %}
 
 	<div class="container projgcolor">
     <div class="proejctlimit">
@@ -33,5 +38,33 @@
     </div>
 
     {% endfor %}
+
+
+            <div class="container">
+
+               <nav aria-label="pagea" class="pageclass">
+                  <ul class="pagination">
+
+
+                {% if page.has_previous %}
+                    <li class=""><a href="{{ page.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                {% endif %}
+
+                {% for pg in page.paginator.page_range %}
+                    {% if viewIndex == pg %}
+                    <li class="active"><a href="#">{{ pg }}<span class="sr-only">(current)</span></a></li>
+				    {% else %}
+                    <li><a href={{ pg }}>{{ pg }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+
+                {% if page.has_next %}
+                    <li><a href="{{ page.next_page_number }}" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                {% endif %}
+
+                 </ul>
+               </nav>
+            </div>
 
 {% endblock body %}

@@ -58,14 +58,30 @@ def checktask(request):
 # 执行任务－选择爬虫和设置参数
 def runtask(request):
     all_spider = Spider.objects.all().order_by('id')
-    content = all_spider[0].spider_content
-    mark = all_spider[0].spider_mark
+
+    first_spider_obj = all_spider[0]
+    content = first_spider_obj.spider_content
+    mark = first_spider_obj.spider_mark
+    func_name = first_spider_obj.spider_runfunction
+
+    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+    info = redisclient.get(func_name + ':runing')
+
+    if info == None:
+        first_spider_obj.spider_runing = False
+    elif info == b'False':
+        first_spider_obj.spider_runing = False
+    else:
+        first_spider_obj.spider_runing = True
+
+    first_spider_obj.save()
 
     context = {
         'urlmark':'runtask',
         'all_spider':all_spider,
         'content':content,
         'mark':mark,
+        'first_item_runing':first_spider_obj.spider_runing,
     }
     return render(request, 'spider/runspidertask.html', context)
 
@@ -95,23 +111,34 @@ def startspiderbyid(request):
         spider_obj.spider_runing = True
         spider_obj.save()
 
-        # redis状态码设置为True
-        redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
-        redisclient.getset(func_name+':runing', 'True')
-
         print('主进程结束标志：此视图结束，爬虫程序自己运行，但是运行状态会放在redis和log中，使用视图调用并传递到ajax和mysql')
-        return JsonResponse({'data': '启动爬虫成功！'})
+        return JsonResponse({'data': '启动爬虫成功，请到实时监控界面查看！','doing':'yes'})
     else:
         # 改变数据库中爬虫运行状态
         spider_obj.spider_runing = False
         spider_obj.save()
 
-        # redis状态码设置为True
-        redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
-        redisclient.getset(func_name+':runing', 'False')
-
         print('主进程结束标志：此视图结束，爬虫程序自己运行，但是运行状态会放在redis和log中，使用视图调用并传递到ajax和mysql')
-        return JsonResponse({'data': '权限不足，无法操作！'})
+        return JsonResponse({'data': '权限不足，无法操作！','doing':'no'})
+
+
+# 停止采集按钮
+def stopspiderbyid(request):
+    spider_id = request.GET['spider_id']
+    result = Spider.objects.filter(id=spider_id)
+    spider_obj = result[0]
+    func_name = spider_obj.spider_runfunction
+
+    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+    redisclient.getset(func_name + ':runing', 'False')
+
+    spider_obj.spider_runing = False
+    spider_obj.save()
+
+    print('修改redis和mysql状态，爬虫退出')
+    return JsonResponse({'data': '停止采集成功！'})
+
+
 
 
 # 执行任务-选择-下拉框变化时候动态显示不同选项的值，下拉框操作一次才会请求一次
@@ -120,9 +147,24 @@ def selectspiderbyid(request):
     spiserid = request.GET['spider_id']
     result = Spider.objects.filter(id=spiserid)
     # 获取爬虫说明和内容
-    content = result[0].spider_content
-    mark = result[0].spider_mark
-    func_name = result[0].spider_runfunction
+    spider_obj = result[0]
+    content = spider_obj.spider_content
+    mark = spider_obj.spider_mark
+    func_name = spider_obj.spider_runfunction
+
+    # 读取redis记录的状态，然后传递给数据库
+    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+    info = redisclient.get(func_name + ':runing')
+
+    print func_name,info
+
+    if info == None:
+        spider_obj.spider_runing = False
+    elif info == b'False':
+        spider_obj.spider_runing = False
+    else:
+        spider_obj.spider_runing = True
+    spider_obj.save()
 
     # 拼接爬虫log文件名称,读取对应log文件数据，文件不存在就返回空值
     logfilename = SpiderBaseDir + func_name + '.log'
@@ -143,7 +185,10 @@ def selectspiderbyid(request):
         'content':content,
         'mark':mark,
         'tags':tags,
+        'runing':spider_obj.spider_runing,
     }
+
+    # print 'spider_obj.spider_runing',func_name,spider_obj.spider_runing
     return JsonResponse({'data': context})
 
 
@@ -198,17 +243,9 @@ def intospider(request, spider_id):
     result = Spider.objects.filter(id=spider_id)
     spider_obj = result[0]
 
-    func_name = spider_obj.spider_runfunction
-    tags = ''
-    if func_name == 'no info':
-        primary = 'no'
-    else:
-        primary = 'check'
-
     # 传递上下文
     context = {
         'spider_obj': spider_obj,
-        'primary': primary,
     }
     return render(request, 'spider/intospider.html', context)
 
@@ -221,17 +258,9 @@ def intospider_form(request):
     result = Spider.objects.filter(id=spider_id)
     spider_obj = result[0]
 
-    func_name = spider_obj.spider_runfunction
-    tags = ''
-    if func_name == 'no info':
-        primary = 'no'
-    else:
-        primary = 'yes'
-
     # 传递上下文
     context = {
         'spider_obj': spider_obj,
-        'primary': primary,
     }
     return render(request, 'spider/intospider.html', context)
 
@@ -240,15 +269,15 @@ def intospider_form(request):
 
 
 def dataoprate(request):
-    pass
+    return render(request, 'building.html')
 
 
 def spidersetting(request):
-    pass
+    return render(request, 'building.html')
 
 
 def spiderhistoty(request):
-    pass
+    return render(request, 'building.html')
 
 
 

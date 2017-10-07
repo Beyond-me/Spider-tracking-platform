@@ -3,6 +3,10 @@
 
 {% extends 'basespiderweb.html' %}
 
+{% block title %}
+    <title>执行爬虫任务</title>
+{% endblock title %}
+
 {% block spiderscript %}
     <link rel="stylesheet" href="/static/css/scrol.css">
 
@@ -10,30 +14,82 @@
     <script type="application/javascript">
         $(function(){
 
-            $('.spiderchoose').change(function () {
+            // 第一次刷新的数据
+            if('{{ first_item_runing }}' === 'False'){
+                $('#startspiderbutton').show();
+                $('#stopspiderbutton').hide();
 
+                $('#run_selectflag').hide();
+                $('#stop_selectflag').show();
+            }
+            else {
+                $('#startspiderbutton').hide();
+                $('#stopspiderbutton').show();
+
+                $('#run_selectflag').show();
+                $('#stop_selectflag').hide();
+            }
+
+            // 下拉框动态同步
+            $('.spiderchoose').change(function () {
                 $.get("/spider/runtask/selectspider", {spider_id: $(this).val()},
                     function (data) {
                         con = data.data;
                         $('.spider_content').html(con.content);
                         $('.spider_mark').html(con.mark);
                         $('.logul').html(con.tags);
+
+                        if(con.runing === false){
+                            $('#run_selectflag').hide();
+                            $('#stop_selectflag').show();
+                        }
+                        else{
+                            $('#run_selectflag').show();
+                            $('#stop_selectflag').hide();
+                        }
                     }
                 );
             });
 
 
-            {#  这一段js需要好好整理和备注 #}
+            {#  ajax请求爬虫新进程 #}
             $('#startspiderbutton').click(function () {
                 // 这一段　启动爬虫，传递爬虫任务的id，和启动任务的参数
                 $.get("/spider/runtask/startspider", {spider_id: $(".spiderchoose").val(), run_argvs: $('#spiderargv').val()},
                     function (data) {
-{#                        alert(data.data);#}
+                        alert(data.data);
+
+                        if (data.doning === 'yes'){
+                            $('#startspiderbutton').hide();
+                            $('#stopspiderbutton').show();
+
+                            $('#run_selectflag').show();
+                            $('#stop_selectflag').hide();
+                        }
+
+
                     }
                 );
             });
-        })
 
+            {#  ajax请求爬虫新进程 #}
+            $('#stopspiderbutton').click(function () {
+                // 这一段　启动爬虫，传递爬虫任务的id，和启动任务的参数
+                $.get("/spider/runtask/stopspider", {spider_id: $(".spiderchoose").val()},
+                    function (data) {
+                        alert(data.data);
+
+                        $('#startspiderbutton').show();
+                        $('#stopspiderbutton').hide();
+
+                        $('#run_selectflag').hide();
+                        $('#stop_selectflag').show();
+                    }
+                );
+            });
+
+
+        })
     </script>
 
 
@@ -56,6 +112,9 @@
                   {% endfor %}
                   </select>
 
+                  <span class="fontcolorgreen selecetrunstatus" id="run_selectflag" style="display: none">(运行中)</span>
+                  <span class="fontcolorred selecetrunstatus" id="stop_selectflag" style="display: none">(暂停运行)</span>
+
             </div>
 
                 <div class="input-group spiderargv">
@@ -73,8 +132,8 @@
                 </div>
 
                 <div class="startspiderbutton">
-                    <button id="startspiderbutton" type="submit" class="btn btn-success">运行爬虫</button>
-{#                  <button id="stopspiderbutton" type="button" class="btn btn-danger">停止爬虫</button>#}
+                    <button id="startspiderbutton" type="submit" class="btn btn-success" style="display: none">运行爬虫</button>
+                    <button id="stopspiderbutton" type="button" class="btn btn-danger" style="display: none">停止爬虫</button>
                 </div>
 
         </div>
@@ -88,7 +147,7 @@
         <div class="infoareasplitline"></div>
 
         <div class="infoarea pre-scrollable" id="style-3">
-            <div class="ulmask">Run Log History:</div>
+            <div class="ulmask">历史信息:</div>
 
             <ul class="logul">
 

@@ -1,0 +1,72 @@
+# 初始化
+SPIDER_FILE_NAME = 'Get_university_list'
+REDIS_RUN_RECORD = SPIDER_FILE_NAME+':runing'
+BASE_DIR = '/home/python/Desktop/mysite/django-blog-spider/spidermanage/spider/spidermodule/'
+LOG_FILE_NAME = BASE_DIR + SPIDER_FILE_NAME + '.log'
+
+# 爬虫指标－redis中的状态
+redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+redisclient.getset(SPIDER_FILE_NAME + ':runing', 'True')
+redisclient.getset(SPIDER_FILE_NAME + ':requestCount', '0')
+redisclient.getset(SPIDER_FILE_NAME + ':downloadCount', '0')
+redisclient.getset(SPIDER_FILE_NAME + ':infoCount', '0')
+redisclient.getset(SPIDER_FILE_NAME + ':errorCount', '0')
+
+
+爬虫脚本文件名称：
+    SPIDER_FILE_NAME = 'Get_university_list'
+
+爬虫存放的根目录为：
+    BASE_DIR = '/home/python/Desktop/mysite/django-blog-spider/spidermanage/spider/spidermodule/'
+
+爬虫log信息存放目录为：
+    BASE_DIR
+爬虫log文件名称为：
+    LOG_FILE_NAME = BASE_DIR + SPIDER_FILE_NAME + '.log'
+
+连接Redis数据库:
+    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+
+状态码设置:
+    True/False
+    redisclient.getset(SPIDER_FILE_NAME + ':runing', 'True')
+
+各项指标：
+    redisclient.getset(SPIDER_FILE_NAME + ':requestCount', '0')
+    redisclient.getset(SPIDER_FILE_NAME + ':downloadCount', '0')
+    redisclient.getset(SPIDER_FILE_NAME + ':infoCount', '0')
+    redisclient.getset(SPIDER_FILE_NAME + ':errorCount', '0')
+
+redis指标说明：
+    每次访问所有爬虫情况，会向mysql数据库中同步redis中记录的指标。
+
+log文件说明：
+    爬虫脚本中做好容错处理。
+    每次 请求/下载/解析/提示错误 都记录进log文件中。
+    如果打开爬虫监控页面，那么采用异步方式每一秒向后台请求最新的log文件内容，并在前台显示。
+
+
+判断某个爬虫运行状态，并同步到mysql：
+    result = Spider.objects.filter(id=spiserid)
+    spider_obj = result[0]
+    func_name = spider_obj.spider_runfunction
+
+    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+    info = redisclient.get(func_name + ':runing')
+
+    if info == None:
+        spider_obj.spider_runing = False
+    elif info == b'False':
+        spider_obj.spider_runing = False
+    else:
+        spider_obj.spider_runing = True
+    spider_obj.save()
+
+
+同理，可以把redis中的所有指标都同步到数据库中去。
+    requestCount = redisclient.get(func_name + ':requestCount')
+    downloadCount = redisclient.get(func_name + ':downloadCount')
+    infoCount = redisclient.get(func_name + ':infoCount')
+    errorCount = redisclient.get(func_name + ':errorCount')
+
+    spider_obj.spider_request_count = str(requestCount)

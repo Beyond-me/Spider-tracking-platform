@@ -13,16 +13,28 @@ import time
 import os
 
 
-def main(test1, test2):
+def main(test1=1, test2=2):
+
+
     # 设置默认编码
     reload(sys)
     sys.setdefaultencoding('utf-8')
 
     # 初始化
-    SPIDER_FILE_NAME = os.path.basename(__file__).replace('.py', '')
+    SPIDER_FILE_NAME = 'Get_university_list'
     REDIS_RUN_RECORD = SPIDER_FILE_NAME+':runing'
     BASE_DIR = '/home/python/Desktop/mysite/django-blog-spider/spidermanage/spider/spidermodule/'
     LOG_FILE_NAME = BASE_DIR + SPIDER_FILE_NAME + '.log'
+
+    # redis状态码设置为True
+    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+    redisclient.getset(SPIDER_FILE_NAME + ':runing', 'True')
+
+    print 'SPIDER_FILE_NAME',SPIDER_FILE_NAME
+    print 'REDIS_RUN_RECORD',REDIS_RUN_RECORD
+    print 'BASE_DIR',BASE_DIR
+    print 'LOG_FILE_NAME',LOG_FILE_NAME
+
     # 创建log文件
     with open(LOG_FILE_NAME, 'w+') as f:
         pass
@@ -33,13 +45,20 @@ def main(test1, test2):
     page = 1
     school_list = []
     while True:
+
+        redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
+        info = redisclient.get(REDIS_RUN_RECORD)
+        if info == b'False':
+            print '爬虫退出'
+            sys.exit()
+
         params = {"messtype": "jsonp","callback": "jQuery18305451626836174455_1505063607887","province": "","schooltype": "普通本科","page": str(page),"size": "30","keyWord1": "","schoolprop": "","schoolflag": "","schoolsort": "","schoolid": "","_": "1505063608095",}
 
         try:
             html = requests.get(url, params=params, headers=headers).text
         except Exception as e:
             html = ''
-            info = ' catching....%d' % page
+            info = ' error: catching....%d, %s' % (page, e)
             print(info)
             with open(LOG_FILE_NAME, 'a+') as f:
                 f.write(str(time.ctime(time.time())) + ': ' + info + '\n')
@@ -75,4 +94,4 @@ def main(test1, test2):
     print 'Finished:',SPIDER_FILE_NAME,test1,test2
 
 if __name__ == "__main__":
-    main()
+    main(1,2)

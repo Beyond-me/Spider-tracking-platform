@@ -1,5 +1,9 @@
 {% extends 'basespiderweb.html' %}
 
+    {% block title %}
+        <title>李谦的博客</title>
+    {% endblock title %}
+
 
 {% block spiderscript %}
 
@@ -58,9 +62,9 @@
                           <td id="DB">{{ each.database_type.DBname }}</td>
 
                           {% if each.spider_runing == False %}
-                          <td id="runing" style="color: red;">暂停运行</td>
+                          <td class="fontcolorred">暂停运行</td>
                           {% else %}
-                          <td id="runing" style="color: green;">运行中</td>
+                          <td class="fontcolorgreen">运行中</td>
                           {% endif %}
 
                           <td id="request_count">{{ each.spider_request_count }}</td>
