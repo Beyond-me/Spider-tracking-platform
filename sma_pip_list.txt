@@ -13,14 +13,13 @@ django-redis-cache==1.7.1
 django-redis-sessions==0.5.6
 django-tinymce==2.6.0
 DjangoUeditor==1.8.143
-geetest==3.0.0
+geetest
 idna==2.5
 jieba==0.38
 kombu==3.0.37
 MySQL-python==1.2.5
 olefile==0.44
 Pillow==3.4.1
-pkg-resources
 pytz==2017.2
 redis==2.10.5
 requests==2.18.3

@@ -125,4 +125,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 STATICFILES_FINDERS = ("django.contrib.staticfiles.finders.FileSystemFinder",
                        "django.contrib.staticfiles.finders.AppDirectoriesFinder",)
-# MEDIA_ROOT = os.path.join(BASE_DIR,'/var/www/spidermanage/static')
+STATIC_ROOT = '/var/www/spidermanage/static/'
