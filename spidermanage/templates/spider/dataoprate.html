@@ -1,0 +1,163 @@
+{% extends 'basespiderweb.html' %}
+
+    {% block title %}
+        <title>数据操作</title>
+    {% endblock title %}
+
+{% block spiderscript %}
+    <style type="text/css">
+        .filecheck dl {
+{#            width: 350px;#}
+        }
+        .filecheck dl,dd {
+            margin: 0px;
+        }
+        .filecheck dt {
+            font-size: 18px;
+            padding: 5px 5px 5px 20px;
+            margin: 2px;
+            height:29px;
+            line-height:28px;
+            color: #fcde7f;
+            display: block;
+        }
+        .filecheck dt a {
+            text-decoration:none;
+            padding: 5px 5px 5px 10px;
+        }
+        .filecheck dd span {
+            color: #000;
+        }
+        .filecheck dd span:hover{
+            color: red;
+        }
+        .filecheck ul{
+            list-style: none;
+            padding:5px 5px 5px 20px;
+            margin:0;
+        }
+        .filecheck li{
+            line-height:24px;
+            margin-left: 35px;
+            color: #979292;
+            display: block;
+        }
+        .filecheck .bg{
+            background-position:5px -16px;
+        }
+        .tapstyle{
+            margin-bottom: 3px;
+        }
+        .opfilebutton{
+            float: left;
+            top: 0px;
+            left: 0px;
+            overflow: visible;
+        }
+        .getfileareaparent{
+            position: relative;
+        }
+        .getfilearea{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+        .downloadbutton{
+            color: black;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+             $("dd").hide();
+             $("dt a").click(function(){
+             $(this).parent().toggleClass("bg");
+             $(this).parent().prevAll("dt").removeClass("bg");
+             $(this).parent().nextAll("dt").removeClass("bg");
+             $(this).parent().next().slideToggle();
+             $(this).parent().prevAll("dd").slideUp("slow");
+             $(this).parent().next().nextAll("dd").slideUp("slow");
+             return false;
+         });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $('ul #addtodestop').click(function () {
+
+{#                alert('没有权限下载，请联系管理员！');#}
+                var filename = $(this).parent().next().find('span').html();
+                var dir = $(this).parent().parent().parent().prev().find('a').html();
+                $.get('/spider/dataopinfo',{FN:filename,DIR:dir},function () {
+
+                })
+            })
+        })
+    </script>
+{% endblock spiderscript %}
+
+
+{% block spiderbody %}
+
+    <div class="container tapstyle">
+        <div class="alert alert-warning alert-dismissible tapstyle" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>提示!</strong> 展开文件夹，点击左侧按钮下载文件。
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="container filecheck">
+
+        <div class="col-lg-6">
+
+            <dl>
+            {% for item in items %}
+                <dt class="glyphicon glyphicon-folder-open"><a href="#">{{ item.dir }}</a></dt>
+                <dd>
+                    <ul>
+                        {% for each in item.fileList  %}
+                        <div class="btn-group btn-group-xs opfilebutton" role="group" aria-label="Extra-small button group">
+                            <button id="addtodestop" type="button" class="btn btn-default">
+                                <a href="/spider/data/{{ item.dir }}!{{ each }}" target="_blank" class="glyphicon glyphicon-arrow-down downloadbutton"></a>
+                            </button>
+                            {# <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span></button>#}
+                        </div>
+                        <li class="glyphicon glyphicon-file filedis"><span>{{ each }}</span></li>
+                        {% endfor %}
+                    </ul>
+                </dd>
+            {% endfor %}
+            </dl>
+
+        </div>
+
+        </div>
+
+    <div class="col-lg-6 getfileareaparent">
+        <div class="getfilearea">
+            <ul>
+
+{#            <div class="btn-group btn-group-xs opfilebutton" role="group" aria-label="Extra-small button group">#}
+{#                 <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span></button>#}
+{#            </div>#}
+{#            <li class="glyphicon glyphicon-file filedis"><span>Get_university_list20171009_083601.json</span></li>#}
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+    </div>
+
+
+{% endblock spiderbody %}
+
+{% block foot %}
+
+{% endblock foot %}

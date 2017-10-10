@@ -11,87 +11,59 @@ import json
 import redis
 import time
 import os
+from RedisLogFunc import RedisLog
 
 
 def main(test1=1, test2=2):
-
-
     # 设置默认编码
     reload(sys)
     sys.setdefaultencoding('utf-8')
+    RL = RedisLog('Get_university_list', 'json')
 
-    # 初始化
-    SPIDER_FILE_NAME = 'Get_university_list'
-    REDIS_RUN_RECORD = SPIDER_FILE_NAME+':runing'
-    BASE_DIR = '/home/python/Desktop/mysite/django-blog-spider/spidermanage/spider/spidermodule/'
-    LOG_FILE_NAME = BASE_DIR + SPIDER_FILE_NAME + '.log'
+    try:
+        DATA_FILE_NAME  = RL.DATA_FILE_NAME
+        LOG_FILE_NAME = RL.LOG_FILE_NAME
 
-    # redis状态码设置为True
-    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
-    redisclient.getset(SPIDER_FILE_NAME + ':runing', 'True')
+        # 下载器
+        headers = {"User-Agent": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Win64; x64; Trident/4.0)"}
+        url = 'http://data.api.gkcx.eol.cn/soudaxue/queryschool.html'  # json
+        page = 1
+        school_list = []
+        while True:
 
-    print 'SPIDER_FILE_NAME',SPIDER_FILE_NAME
-    print 'REDIS_RUN_RECORD',REDIS_RUN_RECORD
-    print 'BASE_DIR',BASE_DIR
-    print 'LOG_FILE_NAME',LOG_FILE_NAME
+            if RL.check_status() == False:
+                RL.loginfo('爬虫退出')
+                sys.exit()
 
-    # 创建log文件
-    with open(LOG_FILE_NAME, 'w+') as f:
-        pass
+            params = {"messtype": "jsonp","callback": "jQuery18305451626836174455_1505063607887","province": "","schooltype": "普通本科","page": str(page),"size": "30","keyWord1": "","schoolprop": "","schoolflag": "","schoolsort": "","schoolid": "","_": "1505063608095",}
+            try:
+                html = requests.get(url, params=params, headers=headers).text
+                RL.loginfo('请求页面%d' % page, 'R')
+                RL.loginfo('下载页面%d' % page, 'D')
+            except Exception as e:
+                html = ''
+                RL.loginfo('请求page%d失败, %s' % (page, e), 'E')
 
-    # 下载器
-    headers = {"User-Agent": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Win64; x64; Trident/4.0)"}
-    url = 'http://data.api.gkcx.eol.cn/soudaxue/queryschool.html'  # json
-    page = 1
-    school_list = []
-    while True:
-
-        redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
-        info = redisclient.get(REDIS_RUN_RECORD)
-        if info == b'False':
-            print '爬虫退出'
-            sys.exit()
-
-        params = {"messtype": "jsonp","callback": "jQuery18305451626836174455_1505063607887","province": "","schooltype": "普通本科","page": str(page),"size": "30","keyWord1": "","schoolprop": "","schoolflag": "","schoolsort": "","schoolid": "","_": "1505063608095",}
-
-        try:
-            html = requests.get(url, params=params, headers=headers).text
-        except Exception as e:
-            html = ''
-            info = ' error: catching....%d, %s' % (page, e)
-            print(info)
-            with open(LOG_FILE_NAME, 'a+') as f:
-                f.write(str(time.ctime(time.time())) + ': ' + info + '\n')
-
-        pattern = r'"schoolname": "(.*?)",'
-        dic = re.findall(pattern, html)
-        if dic == []:
-            break
-        school_list += dic
-        info = ' catching....%d' % page
-        print info
-
-        # 写入log
-        with open(LOG_FILE_NAME, 'a+') as f:
-            f.write(str(time.ctime(time.time()))+ ': ' + info + '\n')
-
-        page += 1
+            pattern = r'"schoolname": "(.*?)",'
+            dic = re.findall(pattern, html)
+            if dic == []:
+                break
+            school_list += dic
+            RL.loginfo('写入文件 %d 条'%len(dic), 'I', len(dic))
+            page += 1
 
 
-    # 把school_list写入json文件
-    with open(BASE_DIR + 'university_list.json', 'w') as f:
-        f.write(json.dumps(school_list, ensure_ascii=False).encode('utf-8'))
+        # 把school_list写入json文件
+        with open(DATA_FILE_NAME, 'w') as f:
+            f.write(json.dumps(school_list, ensure_ascii=False).encode('utf-8'))
 
-    # 写入log
-    with open(LOG_FILE_NAME, 'a+') as f:
-        f.write(str(time.ctime(time.time())) + ': ' + '爬虫运行结束' + '\n')
-
-
-    # 程序结束，修改redis状态码
-    redisclient = redis.Redis(host='127.0.0.1', port=6379, db=1)
-    redisclient.getset(REDIS_RUN_RECORD, 'False')
-
-    print 'Finished:',SPIDER_FILE_NAME,test1,test2
+        RL.loginfo('爬虫运行完成，退出')
+    except Exception as e:
+        RL.loginfo('遇到意料之外的错误，退出')
+    finally:
+        RL.commit_redis()
+        RL.run_false()
 
 if __name__ == "__main__":
     main(1,2)
+

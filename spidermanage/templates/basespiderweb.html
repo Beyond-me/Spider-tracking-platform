@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
     {% block title %}
         <title>爬虫展示</title>
     {% endblock title %}
@@ -16,12 +15,24 @@
 
     </script>
 
+    {# into js空位#}
+    {% block spiderintoscript %}
+    <script>
+        $(function () {
+            $('.intospider').click(function () {
+                alert('请选择一个爬虫启动或者直接查看该爬虫');
+            })
+        });
+
+    </script>
+
+    {% endblock spiderintoscript %}
+
 
     {# js空位#}
     {% block spiderscript %}
+
     {% endblock spiderscript %}
-
-
 
 {% endblock script %}
 
@@ -29,10 +40,7 @@
 {% block jumbotron %}
 {% endblock jumbotron %}
 
-
 {% block body %}
-
-
 
 <div class="sidebarstyle">
 
@@ -68,15 +76,21 @@
         </li>
         </a>
 
-        <a class="sidebarhref" href="/spider/spidersetting">
-         <li class="sidebarli" id='spidersetting'>
-                <span class="sidebartitle">自定义设置</span>
-        </li>
-        </a>
+{#        <a class="sidebarhref" href="/spider/spidersetting">#}
+{#         <li class="sidebarli" id='spidersetting'>#}
+{#                <span class="sidebartitle">自定义设置</span>#}
+{#        </li>#}
+{#        </a>#}
 
         <a class="sidebarhref" href="/spider/spiderhistoty">
          <li class="sidebarli" id='spiderhistoty'>
                 <span class="sidebartitle">历史记录</span>
+        </li>
+        </a>
+
+        <a class="sidebarhref intospider" href="/spider/runtask">
+         <li class="sidebarli" id='intospider'>
+                <span class="sidebartitle">实时监控</span>
         </li>
         </a>
 

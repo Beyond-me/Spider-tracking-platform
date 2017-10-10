@@ -5,6 +5,7 @@
 
 {% block title %}
     <title>执行爬虫任务</title>
+    <meta http-equiv="refresh" content="60">
 {% endblock title %}
 
 {% block spiderscript %}
@@ -12,17 +13,10 @@
 
 
     <script type="application/javascript">
-        $(function(){
+        $(function () {
 
-            // 第一次刷新的数据
-            if('{{ first_item_runing }}' === 'False'){
-                $('#startspiderbutton').show();
-                $('#stopspiderbutton').hide();
-
-                $('#run_selectflag').hide();
-                $('#stop_selectflag').show();
-            }
-            else {
+            // 函数　显示停止按钮
+            function showstopbutton() {
                 $('#startspiderbutton').hide();
                 $('#stopspiderbutton').show();
 
@@ -30,7 +24,24 @@
                 $('#stop_selectflag').hide();
             }
 
-            // 下拉框动态同步
+            // 函数　显示开始按钮
+            function showstartbutton() {
+                $('#startspiderbutton').show();
+                $('#stopspiderbutton').hide();
+
+                $('#run_selectflag').hide();
+                $('#stop_selectflag').show();
+            }
+
+            // 第一次刷新的数据
+            if ('{{ first_item_runing }}' === 'False') {
+                showstartbutton();
+            }
+            else {
+                showstopbutton();
+            }
+
+            // 下拉框动态同步刷新
             $('.spiderchoose').change(function () {
                 $.get("/spider/runtask/selectspider", {spider_id: $(this).val()},
                     function (data) {
@@ -39,11 +50,12 @@
                         $('.spider_mark').html(con.mark);
                         $('.logul').html(con.tags);
 
-                        if(con.runing === false){
+
+                        if (con.runing === false) {
                             $('#run_selectflag').hide();
                             $('#stop_selectflag').show();
                         }
-                        else{
+                        else {
                             $('#run_selectflag').show();
                             $('#stop_selectflag').hide();
                         }
@@ -51,43 +63,47 @@
                 );
             });
 
-
-            {#  ajax请求爬虫新进程 #}
+            // ajax向后端请求爬虫新进程
             $('#startspiderbutton').click(function () {
                 // 这一段　启动爬虫，传递爬虫任务的id，和启动任务的参数
-                $.get("/spider/runtask/startspider", {spider_id: $(".spiderchoose").val(), run_argvs: $('#spiderargv').val()},
+                $.get("/spider/runtask/startspider", {
+                        spider_id: $(".spiderchoose").val(),
+                        run_argvs: $('#spiderargv').val()
+                    },
                     function (data) {
                         alert(data.data);
-
-                        if (data.doning === 'yes'){
-                            $('#startspiderbutton').hide();
-                            $('#stopspiderbutton').show();
-
-                            $('#run_selectflag').show();
-                            $('#stop_selectflag').hide();
+                        if (data.doing == 1) {
+                            showstopbutton();
                         }
-
-
                     }
                 );
             });
 
-            {#  ajax请求爬虫新进程 #}
+            // ajax向后端发送停止爬虫的信号
             $('#stopspiderbutton').click(function () {
                 // 这一段　启动爬虫，传递爬虫任务的id，和启动任务的参数
                 $.get("/spider/runtask/stopspider", {spider_id: $(".spiderchoose").val()},
                     function (data) {
                         alert(data.data);
-
-                        $('#startspiderbutton').show();
-                        $('#stopspiderbutton').hide();
-
-                        $('#run_selectflag').hide();
-                        $('#stop_selectflag').show();
+                        showstartbutton();
                     }
                 );
             });
 
+            // 每过五秒种　向后台同步爬虫状态
+            var flag = 'yes';
+            var myval = setInterval(function () {
+                $.get("/spider/checkrunstatus", {spider_id: $(".spiderchoose").val()},
+                    function (data) {
+                        flag = data.data;
+                        if (flag == true) {
+                            showstopbutton();
+                        }
+                        if (flag == false) {
+                            showstartbutton();
+                        }
+                    });
+            }, 5000);
 
         })
     </script>
@@ -100,26 +116,27 @@
     <div class="row runseting">
 
         <form action="/spider/ss" target="_blank" method="get">
-        <div id="main_select">
-        {#  爬虫选择下拉框 #}
-            <div class="input-group spiderargv">
+            <div id="main_select">
+                {#  爬虫选择下拉框 #}
+                <div class="input-group spiderargv">
 
-                  <span class="input-group-addon" id="basic-addon3">选择爬虫任务</span>
+                    <span class="input-group-addon" id="basic-addon3">选择爬虫任务</span>
 
-                  <select id="spiderchoose" class="spiderchoose" name="spiderchoose">
-                  {% for each in all_spider%}
-                  <option value="{{ each.id }}">{{ each.spider_name }}</option>
-                  {% endfor %}
-                  </select>
+                    <select id="spiderchoose" class="spiderchoose" name="spiderchoose">
+                        {% for each in all_spider %}
+                            <option value="{{ each.id }}">{{ each.spider_name }}</option>
+                        {% endfor %}
+                    </select>
 
-                  <span class="fontcolorgreen selecetrunstatus" id="run_selectflag" style="display: none">(运行中)</span>
-                  <span class="fontcolorred selecetrunstatus" id="stop_selectflag" style="display: none">(暂停运行)</span>
+                    <span class="fontcolorgreen selecetrunstatus" id="run_selectflag" style="display: none">(运行中)</span>
+                    <span class="fontcolorred selecetrunstatus" id="stop_selectflag" style="display: none">(暂停运行)</span>
 
-            </div>
+                </div>
 
                 <div class="input-group spiderargv">
-                  <span class="input-group-addon" id="basic-addon3">输入运行参数</span>
-                  <input name="spiderargv" type="text" class="form-control" id="spiderargv" aria-describedby="basic-addon3" placeholder="例如淘宝: python [零食] [深圳]">
+                    <span class="input-group-addon" id="basic-addon3">输入运行参数</span>
+                    <input name="spiderargv" type="text" class="form-control" id="spiderargv"
+                           aria-describedby="basic-addon3" placeholder="例如: 零食 深圳">
                 </div>
 
                 <div class="spidermark">
@@ -132,13 +149,14 @@
                 </div>
 
                 <div class="startspiderbutton">
-                    <button id="startspiderbutton" type="submit" class="btn btn-success" style="display: none">运行爬虫</button>
-                    <button id="stopspiderbutton" type="button" class="btn btn-danger" style="display: none">停止爬虫</button>
+                    <button id="startspiderbutton" type="submit" class="btn btn-success" style="display: none">运行爬虫
+                    </button>
+                    <button id="stopspiderbutton" type="button" class="btn btn-danger" style="display: none">停止爬虫
+                    </button>
                 </div>
 
-        </div>
+            </div>
         </form>
-
 
     </div><!-- /row -->
 

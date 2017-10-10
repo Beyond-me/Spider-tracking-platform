@@ -112,6 +112,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/spidermanage/static/'
 
 # 公共的static文件
 STATICFILES_DIRS = (
@@ -125,4 +126,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 STATICFILES_FINDERS = ("django.contrib.staticfiles.finders.FileSystemFinder",
                        "django.contrib.staticfiles.finders.AppDirectoriesFinder",)
-STATIC_ROOT = '/var/www/spidermanage/static/'
+

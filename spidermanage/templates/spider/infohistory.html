@@ -1,0 +1,90 @@
+{#先判断这个页面的运行状态，如果是没有运行，那么也不会发出请求#}
+{#本页面实现的功能是，根据传进来的任务id，渲染出不同的页面，然后页面会不断的向前端发出ajax请求#}
+{#请求接收id对应的log信息，并且会根据log信息来决定是否要继续请求#}
+
+
+{% extends 'basespiderweb.html' %}
+
+
+    {% block title %}
+        <title>历史记录</title>
+    {% endblock title %}
+
+{% block spiderscript %}
+
+    <script>
+
+    </script>
+{% endblock spiderscript %}
+
+
+{% block spiderbody %}
+
+<div class="row">
+
+
+  <div class="col-lg-11 table_set">
+          <div>
+              <h3 class="checktabletitle">历史记录</h3>
+              <section>
+                  <table class="table table-bordered table-striped table-condensed">
+                      <thead class="cf">
+                      <tr>
+                          <th>时间</th>
+                          <th>爬虫名称</th>
+                          <th>用户</th>
+                          <th>信息</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                      {% for each in page %}
+                      <tr>
+                          <td id="action_time">{{ each.action_time }}</td>
+                          <td id="spidername">{{ each.spider.spider_name }}</td>
+                          <td id="user">{{ each.user }}</td>
+                          <td id="infocontent">{{ each.content }}</td>
+                      </tr>
+                      {% endfor %}
+
+                      </tbody>
+                  </table>
+              </section>
+          </div><!-- /content-panel -->
+      </div><!-- /col-lg-12 -->
+
+            <div class="container">
+
+               <nav aria-label="pagea" class="pageclass">
+                  <ul class="pagination">
+
+
+                {% if page.has_previous %}
+                    <li class=""><a href="{{ page.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                {% endif %}
+
+                {% for pg in page.paginator.page_range %}
+                    {% if viewIndex == pg %}
+                    <li class="active"><a href="#">{{ pg }}<span class="sr-only">(current)</span></a></li>
+				    {% else %}
+                    <li><a href={{ pg }}>{{ pg }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+
+                {% if page.has_next %}
+                    <li><a href="{{ page.next_page_number }}" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                {% endif %}
+
+                 </ul>
+               </nav>
+            </div>
+
+
+  </div><!-- /row -->
+
+
+
+
+{% endblock spiderbody %}
+

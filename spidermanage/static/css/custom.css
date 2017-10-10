@@ -322,6 +322,9 @@
     background-color: #edeadb;
 }
 
+.noiceuser{
+    padding-left: 15px;
+}
 
 
 /*爬虫监控查看全部任务*/
@@ -392,6 +395,7 @@ td{
 
 .spider_mark{
     padding-left: 24px;
+    margin-bottom: 10px;
 }
 
 .markstyle{
@@ -437,7 +441,7 @@ td{
 
 
 .runsetingh3{
-    text-align: center;
+    margin-left: 151px;
     color: black;
 }
 
@@ -454,18 +458,12 @@ td{
     margin-left: 15px;
 }
 
+.filenameform{
+    margin-left: 30px;
+}
 
 
-
-
-
-
-
-
-
-
-
-
+/*文件管理部分*/
 
 
 

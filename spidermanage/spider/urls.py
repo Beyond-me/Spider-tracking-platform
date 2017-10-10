@@ -20,6 +20,13 @@ urlpatterns = [
     url(r'^ss$', views.intospider_form, name='intospider_form'),
 
     url(r'^dataoprate$', views.dataoprate, name='dataoprate'),
+    url(r'^data/(.*?)!(.*?)$', views.data_file_download, name='data_file_download'),
+    url(r'^dataopinfo$', views.dataopinfo, name='dataopinfo'),
+
     url(r'^spidersetting$', views.spidersetting, name='spidersetting'),
-    url(r'^spiderhistoty$', views.spiderhistoty, name='spiderhistoty'),
+
+    # url(r'^spiderhistoty$', views.spiderhistoty, name='spiderhistoty'),
+    url(r'^spiderhistoty/(\d*)$', views.spiderhistoty, name='spiderhistoty'),
+
+    url(r'^checkrunstatus$', views.checkrunstatus, name='checkrunstatus'),
 ]

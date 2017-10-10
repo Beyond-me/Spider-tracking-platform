@@ -54,6 +54,22 @@ class DatabaseType(models.Model):
         verbose_name_plural = '数据库类型'
 
 
+class Message(models.Model):
+    action_time = models.CharField(max_length=200, default='NULL')
+    content = models.CharField(max_length=200, default='NULL')
+    user = models.CharField(max_length=100, default='admin')
+    spider = models.ForeignKey(Spider, null=True, blank=True)
+
+    def __str__(self):
+        return self.content.encode('utf-8')
+
+    class Meta:
+        verbose_name = '通知'
+        verbose_name_plural = '通知'
+
+
+
+
 
 
 

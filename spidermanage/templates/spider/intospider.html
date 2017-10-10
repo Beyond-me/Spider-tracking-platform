@@ -5,24 +5,25 @@
 
 {% extends 'basespiderweb.html' %}
 
-
     {% block title %}
         <title>爬虫实时监控页面</title>
     {% endblock title %}
+
+{# into js空位#}
+{% block spiderintoscript %}
+<script>
+    $(function () {
+        $('.intospider').attr("href","#")
+    });
+
+</script>
+
+{% endblock spiderintoscript %}
 
 {% block spiderscript %}
     <link rel="stylesheet" href="/static/css/scrol.css">
 
     <script>
-
-{#        var primary = '{{ primary }}';#}
-{##}
-{#        if(primary === 'no'){#}
-{#            alert('没有足够的权限操作这个任务！')#}
-{#        }#}
-{#        if(primary === 'yes'){#}
-{#            alert('启动爬虫成功！')#}
-{#        }#}
 
         var flag = 'yes';
         var myval = setInterval(function () {
@@ -37,8 +38,10 @@
                      $('.logul').html('<li>'+data.content+'</li>');
                      $('#runstatus').html('暂停运行').css("color","red");
                  }
+                 $('.infoarea').scrollTop( $('.infoarea')[0].scrollHeight );
             });
         }, 500);
+
 
     </script>
 {% endblock spiderscript %}
@@ -47,7 +50,7 @@
 {% block spiderbody %}
 
     <div class="row runseting">
-    <h1 class="runsetingh3">爬虫采集实时监控界面</h1>
+    <h2 class="runsetingh3">爬虫采集实时监控界面</h2>
         <div id="main_select">
 
             <div class="spidermark">
