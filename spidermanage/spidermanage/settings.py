@@ -85,8 +85,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'spidermanage',
-        'USER': 'root',
-        'PASSWORD': 'mysql',
+        'USER': os.environ.get('MySQL_User', 'root'),
+        'PASSWORD': os.environ.get('User_PSD', 'mysql'),
         'HOST': 'localhost',
         'PORT': '3306',
 
