@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 from django.db import models
 
 
@@ -35,6 +35,7 @@ class Spider(models.Model):
     spider_pic = models.ImageField(null=True,blank=True)
     # 爬虫　逻辑删除
     isDelete = models.BooleanField(default=False)
+
     def __str__(self):
         return self.spider_name.encode('utf-8')
 
@@ -46,6 +47,7 @@ class Spider(models.Model):
 class DatabaseType(models.Model):
     DBname = models.CharField(max_length=50)
     isDelete = models.BooleanField(default=False)
+
     def __str__(self):
         return self.DBname.encode('utf-8')
 

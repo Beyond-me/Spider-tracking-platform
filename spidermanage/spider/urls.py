@@ -5,6 +5,7 @@ import views
 
 
 urlpatterns = [
+    url(r'^$', views.spiderstatus, name='spiderstatus'),
     url(r'^spiderstatus$', views.spiderstatus, name='spiderstatus'),
     url(r'^checktask$', views.checktask, name='checktask'),
 

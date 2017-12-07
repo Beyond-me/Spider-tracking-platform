@@ -24,12 +24,9 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     # 编辑器
     url(r'^ueditor/', include(djud_urls)),
-    # content　文章链接
-    url(r'^', include('content.urls')),
-    # project 项目链接
-    url(r'project/', include('project.urls')),
     # spider 爬虫模块链接
-    url(r'spider/', include('spider.urls'))
+    url(r'spider/', include('spider.urls')),
+    url(r'^$', include('spider.urls'))
 ]
 
 if settings.DEBUG:
