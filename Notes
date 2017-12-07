@@ -1,0 +1,4 @@
+from DjangoUeditor.models import UEditorField
+
+content = UEditorField(height=300, width=1000, default=u'', blank=True, imagePath="uploads/blog/images/",
+                       toolbars='besttome', filePath='uploads/blog/files/')
